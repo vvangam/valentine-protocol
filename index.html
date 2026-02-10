@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0b12" />
+  <title>Valentine Protocol</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <main class="app" role="main">
+    <header class="topbar">
+      <div class="brand">
+        <div class="dot" aria-hidden="true"></div>
+        <span>VALENTINE PROTOCOL</span>
+      </div>
+
+      <div class="topbarRight">
+        <button id="personalizeBtn" class="ghost" type="button">Personalize</button>
+        <button id="soundToggle" class="ghost" type="button" aria-pressed="false" title="Toggle sound">
+          Sound: Off
+        </button>
+      </div>
+    </header>
+
+    <section class="card" aria-live="polite">
+      <div class="cardGlow" aria-hidden="true"></div>
+
+      <!-- INTRO -->
+      <div id="stageIntro" class="stage stage--active">
+        <div class="badge">Private • For One Person Only</div>
+        <h1 class="title">
+          Hi <span id="herNameHero">Valentine</span>.
+        </h1>
+        <p class="subtitle">
+          Happy Valentines day! I’m annoyingly serious about you.
+        </p>
+
+        <div class="introGrid" id="introGallery" aria-label="Photo gallery"></div>
+
+        <div class="btnRow">
+          <button class="btn btn--primary" id="btnBegin" type="button">Begin</button>
+          <button class="btn btn--secondary" id="btnSkipToQuestion" type="button">Skip to the question</button>
+        </div>
+
+        <p class="hint">
+          Tip: turn on sound if you want tiny “movie UI” beeps.
+        </p>
+      </div>
+
+      <!-- QUESTION -->
+      <div id="stageAsk" class="stage">
+        <div class="badge">Secure Request • High Priority</div>
+        <h2 class="title title--sm">Will you be my Valentine?</h2>
+        <p class="subtitle">
+          You technically have options. The system is still going to get what it wants.
+        </p>
+
+        <div class="btnRow" id="btnRow" style="min-height: 112px;">
+          <button class="btn btn--primary" id="btnYes" type="button">Yes</button>
+          <button class="btn btn--secondary" id="btnCinematic" type="button">Yes, but make it cinematic</button>
+          <button class="btn btn--secondary" id="btnCoffee" type="button">I need coffee first</button>
+          <button class="btn btn--danger" id="btnNo" type="button">No</button>
+        </div>
+
+        <p class="hint" id="hintText">Tip: “No” exists for comedic purposes.</p>
+      </div>
+
+      <!-- MINI QUIZ -->
+      <div id="stageQuiz" class="stage">
+        <div class="badge">Quick Vibe Check • 10 seconds</div>
+        <h2 class="title title--sm">Before I run the scan…</h2>
+        <p class="subtitle">Pick what feels like you today. This will customize the “analysis.”</p>
+
+        <div class="quizGrid">
+          <label class="quizField">
+            Today’s vibe
+            <select id="moodSelect">
+              <option value="soft">soft and cozy</option>
+              <option value="chaos">chaos but cute</option>
+              <option value="boss">main character energy</option>
+              <option value="sleepy">sleepy, please send coffee</option>
+            </select>
+          </label>
+
+          <label class="quizField">
+            Coffee order
+            <select id="coffeeSelect">
+              <option value="latte">latte</option>
+              <option value="americano">americano</option>
+              <option value="espresso">espresso</option>
+              <option value="tea">tea (still acceptable)</option>
+            </select>
+          </label>
+
+          <label class="quizField">
+            Date mode
+            <select id="dateSelect">
+              <option value="cafe">cute café + talk forever</option>
+              <option value="art">art date + wandering</option>
+              <option value="swim">swim + then warm food</option>
+              <option value="movie">movie night + blankets</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="btnRow">
+          <button class="btn btn--primary" id="btnRunScan" type="button">Run the scan</button>
+          <button class="btn btn--secondary" id="btnBackToChoices" type="button">Back</button>
+        </div>
+
+        <p class="hint muted">I will pretend this is scientific.</p>
+      </div>
+
+      <!-- SCAN -->
+      <div id="stageScan" class="stage">
+        <div class="badge">Compatibility Scan • v2.0</div>
+        <h2 class="title title--sm">Running Valentine Eligibility Scan…</h2>
+        <p class="subtitle">
+          Checking vibes, emotional safety, and whether you’re the best thing that’s happened to me.
+        </p>
+
+        <div class="scanBox" role="status" aria-live="polite">
+          <div class="progressOuter">
+            <div id="progressBar" class="progressInner"></div>
+          </div>
+          <ul id="scanLog" class="scanLog"></ul>
+        </div>
+
+        <div class="btnRow">
+          <button class="btn btn--primary" id="btnProceed" type="button" disabled>Proceed</button>
+          <button class="btn btn--secondary" id="btnAbort" type="button">Abort (for drama)</button>
+        </div>
+      </div>
+
+      <!-- YES / FINAL -->
+      <div id="stageYes" class="stage">
+        <div class="badge">Confirmed • Official</div>
+        <h2 class="title">Correct choice.</h2>
+        <p class="subtitle">
+          <strong><span id="herNameFinal">Valentine</span></strong>, you were always my Valentine.
+          This was just the official confirmation.
+        </p>
+
+        <div class="finalGrid">
+          <div class="loveNote" id="loveNote">
+            <p class="loveLine">Dear <span id="nameSlot">Valentine</span>,</p>
+            <p class="loveLine">
+              I love you in the calm moments, the chaotic moments, the coffee moments, and the “what are we even doing” moments.
+            </p>
+            <p class="loveLine">
+              Thank you for being you. You’re my favorite person.
+            </p>
+            <p class="loveLine loveSig">Love, <span id="sigSlot">Me</span></p>
+          </div>
+
+          <div class="memoryVault">
+            <div class="vaultTop">
+              <h3>Unlocked: Memory Vault</h3>
+              <p class="muted">Tap a photo.</p>
+            </div>
+
+            <div class="memoryGrid" id="memoryGrid"></div>
+
+            <div class="memoryMessage" id="memoryMessage" aria-live="polite">
+              Tap a memory to reveal a message.
+            </div>
+          </div>
+        </div>
+
+        <div class="btnRow">
+          <button class="btn btn--primary" id="btnReplay" type="button">Replay</button>
+          <button class="btn btn--secondary" id="btnCopy" type="button">Copy love note</button>
+        </div>
+
+        <p class="hint muted">Hidden feature: press V then A then L then E… on your keyboard.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted"></span>
+    </footer>
+  </main>
+
+  <!-- PERSONALIZE DIALOG -->
+  <dialog id="nameDialog" class="dialog">
+    <form method="dialog" class="dialogInner">
+      <h3>Personalize</h3>
+      <p class="muted">Optional. But it makes it feel like you didn’t outsource romance to a computer.</p>
+
+      <label class="field">
+        Her name / nickname
+        <input id="herName" type="text" maxlength="30" placeholder="Anvi" autocomplete="off" />
+      </label>
+
+      <label class="field">
+        Your name / signature
+        <input id="yourName" type="text" maxlength="30" placeholder="Vishwa" autocomplete="off" />
+      </label>
+
+      <div class="dialogBtns">
+        <button class="btn btn--secondary" value="skip" type="submit">Cancel</button>
+        <button class="btn btn--primary" value="save" type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- MEMORY POPUP -->
+  <dialog id="popupDialog" class="dialog">
+    <form method="dialog" class="dialogInner">
+      <h3 id="popupTitle">Memory</h3>
+      <p id="popupText" class="popupText"></p>
+      <div class="dialogBtns">
+        <button class="btn btn--primary" value="ok" type="submit">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+:root{
+  --bg:#070710;
+  --card:#0e0e1a;
+  --text:#f4f4ff;
+  --muted:#b8b8d6;
+  --primary:#ff4da6;
+  --danger:#ff3b3b;
+  --stroke: rgba(255,255,255,0.12);
+  --shadow: 0 22px 70px rgba(0,0,0,0.55);
+  --radius: 22px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+  background:
+    radial-gradient(900px 600px at 20% 10%, rgba(255,77,166,0.12), transparent 55%),
+    radial-gradient(700px 450px at 80% 25%, rgba(133,97,255,0.14), transparent 55%),
+    radial-gradient(900px 650px at 50% 90%, rgba(255,122,192,0.10), transparent 60%),
+    var(--bg);
+  overflow-x:hidden;
+  animation: bgDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgDrift{
+  from{ background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+  to{ background-position: 8% 6%, -6% 10%, 4% -8%, 0% 0%; }
+}
+
+#confetti{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+.app{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:28px 16px 18px;
+  position:relative;
+  z-index:1;
+}
+
+.topbar{
+  width:min(920px, 100%);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  gap:12px;
+}
+
+.topbarRight{
+  display:flex;
+  gap:10px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  letter-spacing:0.12em;
+  font-size:12px;
+  opacity:0.92;
+}
+
+.dot{
+  width:10px;height:10px;border-radius:999px;
+  background:linear-gradient(135deg, var(--primary), #8f7bff);
+  box-shadow:0 0 0 6px rgba(255,77,166,0.12);
+}
+
+.card{
+  width:min(920px, 100%);
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+  padding:26px 22px 22px;
+}
+
+.cardGlow{
+  position:absolute;
+  inset:-220px -160px auto -180px;
+  height:400px;
+  background: radial-gradient(circle at 30% 40%, rgba(255,77,166,0.22), transparent 55%);
+  filter: blur(10px);
+  pointer-events:none;
+}
+
+.badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:999px;
+  background:rgba(255,255,255,0.04);
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:0.02em;
+}
+
+.title{
+  margin:16px 0 8px;
+  font-size: clamp(30px, 4.5vw, 46px);
+  line-height:1.05;
+  letter-spacing:-0.02em;
+}
+
+.title--sm{
+  font-size: clamp(22px, 3.4vw, 34px);
+}
+
+.subtitle{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.45;
+  max-width:70ch;
+}
+
+.btnRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  margin-top:12px;
+  position:relative;
+}
+
+.btn{
+  border:none;
+  border-radius:16px;
+  padding:12px 16px;
+  font-weight:800;
+  cursor:pointer;
+  transition: transform .15s ease, filter .2s ease, box-shadow .2s ease, background .2s ease;
+  user-select:none;
+  position:relative;
+}
+
+.btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
+.btn--primary{
+  background: linear-gradient(135deg, var(--primary), #8f7bff);
+  color:#0a0a14;
+  box-shadow: 0 10px 25px rgba(255,77,166,0.22);
+}
+
+.btn--secondary{
+  background: rgba(255,255,255,0.06);
+  color:var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.btn--danger{
+  background: rgba(255,59,59,0.12);
+  color:#ffd7d7;
+  border:1px solid rgba(255,59,59,0.22);
+}
+
+.stage{ display:none; }
+.stage--active{ display:block; }
+
+/* ===== Photo gallery (NO FACE CROPPING) ===== */
+.introGrid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap:12px;
+  margin-top:14px;
+}
+
+.photoFrame{
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.16);
+  aspect-ratio:4/5;
+}
+
+.photoFrame::before{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  background-image: var(--bgimg);
+  background-size:cover;
+  background-position:center;
+  filter: blur(18px) brightness(.7);
+  transform:scale(1.2);
+}
+
+.photoFrame img{
+  position:relative;
+  width:100%;
+  height:100%;
+  object-fit:contain; /* prevents face cropping */
+  object-position:center;
+}
+
+/* Memory cards */
+.memoryGrid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+}
+
+.memoryCard{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  background:#0003;
+}
+
+.memoryCard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:var(--bgimg);
+  background-size:cover;
+  background-position:center;
+  filter: blur(14px) brightness(.65);
+  transform:scale(1.15);
+}
+
+.memoryCard img{
+  position:relative;
+  width:100%;
+  height:150px;
+  object-fit:contain;
+}
+
+.finalGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+@media(max-width:860px){
+  .finalGrid{ grid-template-columns:1fr; }
+}
